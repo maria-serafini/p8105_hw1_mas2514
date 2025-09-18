@@ -4,8 +4,15 @@ author: Maria Serafini
 output: github_document
 ---
 
-```{r setup, include=FALSE}
+# Problem 1
 
+```{r setup, include=FALSE}
+library(moderndive)
 ```
 
+## This chunk loads the 'early_january_weather' dataset from the moderndive library
+
+```{r early_january_weather data}
+data("early_january_weather")
+```
 
