@@ -54,7 +54,8 @@ __This chunk makes a scatterplot of temperature by date/hour of recording__
 # gives scatter plot of temperature by date/hour of recording and color coded based on relative humidity
 ggplot(early_january_weather, aes(x = time_hour, y = temp, color = humid)) +
   geom_point()
+ggsave("jan_weather_plot.pdf", height = 5, width = 7)
 ```
 
-
+The scatterplot above shows the hourly temperature recordings from January 1st to 15th, with point color representing the relative humidity at the time of the recording. The temperature recordings display a daily pattern of rising during the day and falling at night, with most of the recordings staying within a range of 30 to 50 degrees Fahrenheit. Across the two week recording period, temperatures appear relatively stable but with a dip at the start of January and a peak by mid-January, suggesting a slight warming trend. Relative humidity is more variable, with lower humidity clustering in the early part of the month and higher humidity values becoming more common toward the middle of the month. Notably, there is a cluster of recordings around January 12-13th with lower temperature variability throughout the day and high relative humidity.
 
