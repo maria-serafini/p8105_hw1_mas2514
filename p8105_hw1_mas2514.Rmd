@@ -11,45 +11,50 @@ library(moderndive)
 library(tidyverse)
 ```
 
-### This chunk loads and describes the 'early_january_weather' dataset from the moderndive library 
+
+__This chunk loads and describes the `early_january_weather` dataset from the moderndive library__ 
 
 ```{r early_january_weather data}
 #loads dataset early_january_weather
 data("early_january_weather")
 
-# gives the size of the dataset by rows and columns
-nrow(early_january_weather)
-ncol(early_january_weather)
-
-# gives the mean temperature
+# calculates and saves value for the mean, median, and standard deviation of temperature variable
 mean_temp <- mean(pull(early_january_weather, temp))
+median_temp <- median(pull(early_january_weather, temp))
+std_temp <- sd(pull(early_january_weather, temp))
+
+# calculates and saves value the mean, median, and standard deviation of temperature variable
+mean_humid <- mean(pull(early_january_weather, humid))
+median_humid <- median(pull(early_january_weather, humid))
+std_humid <- sd(pull(early_january_weather, humid))
 ```
 
-### The dataset `early_january_weather` includes meterological data for LGA, JFK, and EWR for the month of January 2013.
-* __Contains 358 observations representing hourly measurements and 15 variables:__ 
-  * _origin_ - weather station (LGA, JFK, EWR)
-  * _year_ - year at time of recording (2013)
-  * _month_ - month at time of recording (1)
-  * _day_ - day of the month at time of recording (1-15)
-  * _hour_ - hour of the day at time of recording (0-24)
-  * _temp_ - temperature (degrees F)
-  * _dewp_ - dewpoint (degrees F)
-  * _humid_ - relative humidity
-  * _wind_dir_ - wind direction (degrees)
-  * _wind_speed_ - wind speed (mph) 
-  * _wind_gust_ - wind gust speed (mph)
-  * _precip_ - precipitation (inches)
-  * _pressure_ - sea level pressure (milibars)
-  * _visib_ - visibility (miles)
-  * _time_hour_ - date and hour of recording as a POSIXct date
-* __The size of the dataset is `r nrow(early_january_weather)` rows by `r ncol(early_january_weather)` columns__
-* __The mean temperature is `r round(mean_temp, digits = 2)`__
+__The dataset `early_january_weather` includes meterological data for LGA, JFK, and EWR for the month of January 2013 and contains `r nrow(early_january_weather)` observations (rows) representing hourly measurements and `r ncol(early_january_weather)` variables (columns):__ 
 
-### This chunk makes a scatterplot of temperature by date and hour of recording
+* `origin` - weather station (LGA, JFK, EWR)
+* `year` - year at time of recording (2013)
+* `month` - month at time of recording (1)
+* `day` - day of the month at time of recording (`r range(pull(early_january_weather, day))`)
+* `hour` - hour of the day at time of recording (`r range(pull(early_january_weather, hour))`)
+* `temp` - temperature (degrees F, _mean_: `r round(mean_temp, digits = 2)`, _median_: `r round(median_temp, digits = 2)`, _std_: `r round(std_temp, digits = 2)`)
+* `dewp` - dewpoint (degrees F)
+* `humid` - relative humidity (_mean_: `r round(mean_humid, digits = 2)`, _median_: `r round(median_humid, digits = 2)`, _std_: `r round(std_humid, digits = 2)`)
+* `wind_dir` - wind direction (degrees)
+* `wind_speed` - wind speed (mph) 
+* `wind_gust` - wind gust speed (mph)
+* `precip` - precipitation (inches)
+* `pressure` - sea level pressure (milibars)
+* `visib` - visibility (miles)
+* `time_hour` - date and hour of recording as a POSIXct date
+
+#
+__This chunk makes a scatterplot of temperature by date/hour of recording__
 
 ```{r scatterplot}
-# gives scatterplot of temperature by date/hour of recording and color coded based on relative humidity
+# gives scatter plot of temperature by date/hour of recording and color coded based on relative humidity
 ggplot(early_january_weather, aes(x = time_hour, y = temp, color = humid)) +
   geom_point()
 ```
+
+
 
