@@ -12,10 +12,10 @@ library(tidyverse)
 ```
 
 
-__This chunk loads and describes the `early_january_weather` dataset from the moderndive library__ 
+__This chunk loads the `early_january_weather` dataset from the moderndive library and finds the mean, median, and standard deviation of the temperature and humidity recordings and stores the values for in-line use__ 
 
 ```{r early_january_weather data}
-#loads dataset early_january_weather
+# loads dataset early_january_weather
 data("early_january_weather")
 
 # calculates and saves value for the mean, median, and standard deviation of temperature variable
@@ -23,7 +23,7 @@ mean_temp <- mean(pull(early_january_weather, temp))
 median_temp <- median(pull(early_january_weather, temp))
 std_temp <- sd(pull(early_january_weather, temp))
 
-# calculates and saves value the mean, median, and standard deviation of temperature variable
+# calculates and saves value the mean, median, and standard deviation of humidity variable
 mean_humid <- mean(pull(early_january_weather, humid))
 median_humid <- median(pull(early_january_weather, humid))
 std_humid <- sd(pull(early_january_weather, humid))
@@ -48,14 +48,31 @@ __The dataset `early_january_weather` includes meterological data for LGA, JFK, 
 * `time_hour` - date and hour of recording as a POSIXct date
 
 #
-__This chunk makes a scatterplot of temperature by date/hour of recording__
+__This chunk makes a scatterplot of recorded temperature by date/hour of the recording with color coding to indicate relative humidity and saves the plot as a pdf__
 
 ```{r scatterplot}
-# gives scatter plot of temperature by date/hour of recording and color coded based on relative humidity
+# creates scatterplot of temperature by date/hour of recording and color coded based on relative humidity
 ggplot(early_january_weather, aes(x = time_hour, y = temp, color = humid)) +
   geom_point()
+
+# saves scatterplot as pdf
 ggsave("jan_weather_plot.pdf", height = 5, width = 7)
 ```
 
-The scatterplot above shows the hourly temperature recordings from January 1st to 15th, with point color representing the relative humidity at the time of the recording. The temperature recordings display a daily pattern of rising during the day and falling at night, with most of the recordings staying within a range of 30 to 50 degrees Fahrenheit. Across the two week recording period, temperatures appear relatively stable but with a dip at the start of January and a peak by mid-January, suggesting a slight warming trend. Relative humidity is more variable, with lower humidity clustering in the early part of the month and higher humidity values becoming more common toward the middle of the month. Notably, there is a cluster of recordings around January 12-13th with lower temperature variability throughout the day and high relative humidity.
+The scatterplot `jan_weather_plot` above shows the hourly temperature recordings from January 1st to 15th, with point color representing the relative humidity at the time of the recording. The temperature recordings display a daily pattern of rising during the day and falling at night, with most of the recordings staying within a range of 30 to 50 degrees Fahrenheit. Across the two week recording period, temperatures appear relatively stable but with a dip at the start of January and a peak by mid-January, suggesting a slight warming trend. Relative humidity is more variable, with lower humidity clustering in the early part of the month and higher humidity values becoming more common toward the middle of the month. Notably, there is a cluster of recordings around January 12-13th with lower temperature variability throughout the day and high relative humidity.
 
+
+## Problem 2
+
+__This chunk creates the data frame `sample_df` containing a sample of size 10 from a random normal variable, a logical vector to indicate whether sample elements are greater than 0, a character vector of length 10, and a factor vector of length 10 with 3 different factor levels (good, better, best). It also takes the mean of each variable in the dataframe and saves it for inline printing__ 
+
+```{r random sample}
+# creates dataframe of sample 10 with logical, character, and factor vectors 
+sample_df <- 
+  tibble(
+    norm_samp = rnorm(10),
+    norm_samp_pos = norm_samp > 0, 
+    vec_char = c("cookie dough", "mint chip", "strawberry", "vanilla", "chocolate", "rocky road", "butter pecan", "cookies n cream", "chocolate chip", "caramel"),
+    vec_factor = factor(c("best", "better", "good", "better", "best", "good", "good", "best", "better", "better"))
+  )
+```
