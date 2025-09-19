@@ -1,17 +1,17 @@
 ---
-title: "Homework 1"
-author: Maria Serafini
+title: "P8105 Homework 1"
+author: "Maria Serafini"
 output: github_document
 ---
 
-# Problem 1
+## Problem 1
 
 ```{r setup, include=FALSE}
 library(moderndive)
 library(tidyverse)
 ```
 
-### This chunk loads the 'early_january_weather' dataset from the moderndive library
+### This chunk loads and describes the 'early_january_weather' dataset from the moderndive library 
 
 ```{r early_january_weather data}
 #loads dataset early_january_weather
@@ -21,7 +21,7 @@ data("early_january_weather")
 nrow(early_january_weather)
 ncol(early_january_weather)
 
-# calculates the mean temperature
+# gives the mean temperature
 mean_temp <- mean(pull(early_january_weather, temp))
 ```
 
@@ -36,11 +36,20 @@ mean_temp <- mean(pull(early_january_weather, temp))
   * _dewp_ - dewpoint (degrees F)
   * _humid_ - relative humidity
   * _wind_dir_ - wind direction (degrees)
-  * _wind_speed_ - speed (mph) 
-  * _wind_gust_ - gust speed (mph)
+  * _wind_speed_ - wind speed (mph) 
+  * _wind_gust_ - wind gust speed (mph)
   * _precip_ - precipitation (inches)
   * _pressure_ - sea level pressure (milibars)
   * _visib_ - visibility (miles)
-  * _time_hour_ - date & hour of recording as a POSIXct date
+  * _time_hour_ - date and hour of recording as a POSIXct date
 * __The size of the dataset is `r nrow(early_january_weather)` rows by `r ncol(early_january_weather)` columns__
 * __The mean temperature is `r round(mean_temp, digits = 2)`__
+
+### This chunk makes a scatterplot of temperature by date and hour of recording
+
+```{r scatterplot}
+# gives scatterplot of temperature by date/hour of recording and color coded based on relative humidity
+ggplot(early_january_weather, aes(x = time_hour, y = temp, color = humid)) +
+  geom_point()
+```
+
