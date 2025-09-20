@@ -12,7 +12,7 @@ library(tidyverse)
 ```
 
 
-__This chunk loads the `early_january_weather` dataset from the moderndive library and finds the mean, median, and standard deviation of the temperature and humidity recordings and stores the values for in-line use__ 
+__This chunk loads the `early_january_weather` dataset from the moderndive package and finds the mean, median, and standard deviation of the temperature and humidity recordings and stores the values for in-line use__ 
 
 ```{r early_january_weather data}
 # loads dataset early_january_weather
@@ -64,7 +64,7 @@ The scatterplot `jan_weather_plot` above shows the hourly temperature recordings
 
 ## Problem 2
 
-__This chunk creates the data frame `sample_df` containing a sample of size 10 from a random normal variable, a logical vector to indicate whether sample elements are greater than 0, a character vector of length 10, and a factor vector of length 10 with 3 different factor levels (good, better, best). It also takes the mean of each variable in the dataframe and saves it for inline printing__ 
+__This chunk creates the data frame `sample_df` containing a sample of size 10 from a random normal variable, a logical vector to indicate whether sample elements are greater than 0, a character vector of length 10, and a factor vector of length 10 with 3 different factor levels (good, better, best). It also takes the mean of each variable in the dataframe and saves the values for inline printing__ 
 
 ```{r random sample}
 # creates dataframe of sample 10 with logical, character, and factor vectors 
@@ -72,7 +72,28 @@ sample_df <-
   tibble(
     norm_samp = rnorm(10),
     norm_samp_pos = norm_samp > 0, 
-    vec_char = c("cookie dough", "mint chip", "strawberry", "vanilla", "chocolate", "rocky road", "butter pecan", "cookies n cream", "chocolate chip", "caramel"),
-    vec_factor = factor(c("best", "better", "good", "better", "best", "good", "good", "best", "better", "better"))
+    vec_char = c("cookie dough", "mint chip", "strawberry", "vanilla", "chocolate", 
+                 "rocky road", "butter pecan", "cookies n cream", "chocolate chip", "caramel"),
+    vec_factor = factor(c("best", "better", "good", "better", "best", "good", "good", "best", 
+                          "better", "better"))
   )
+
+# gives mean of each variable in sample_df
+mean_samp <- mean(pull(sample_df, norm_samp))
+mean_samp_pos <- mean(pull(sample_df, norm_samp_pos))
+mean_char <- mean(pull(sample_df, vec_char))
+mean_factor <- mean(pull(sample_df, vec_factor))
 ```
+
+Using the `mean()` function to take the mean of each of the variables in `sample_df` returns `r round(mean_samp, digits = 2)` for the mean of the sample and `r round(mean_samp_pos, digits = 2)` for the mean of the logical vector, `norm_samp_pos`. For the character and factor vectors, applying `mean()` gives a warning message 'argument is not numeric or logical' and returns '`r mean_char`' for the character vector, `vec_char`, and '`r mean_factor`' for the factor vector, `vec_factor`.
+
+
+__The chunk below applies the `as.numeric` function to the logical, character, and vector variables from `sample_df`__ 
+```{r, eval=FALSE}
+# applies as.numeric function to sample_df variables to corece to numeric values
+as.numeric(pull(sample_df, norm_samp_pos))
+as.numeric(pull(sample_df, vec_char))
+as.numeric(pull(sample_df, vec_factor))
+```
+
+Applying the `as.numeric()` function to `norm_samp_pos`, returns '`r as.numeric(pull(sample_df, norm_samp_pos))`' because TRUE has a value of '1' and FALSE has a value of '0' for logical vectors. Applying the `mean()` function therefore returns a value that represents the proportion of TRUE values. For the factor vector, `vec_factor`, `as.numeric()` returns '`r as.numeric(pull(sample_df, vec_factor))`' because each factor level is arbitrarily assigned a value (best = '1', better = '2', good = '3', in this case). 'NA' is returned when applying the `mean()` function to factor vectors because the assigned values do not actually represent the order of the levels and taking the mean would therefore be meaningless. Applying `as.numeric()` to `vec_char` gives a warning message, 'NAs introduced by coercion', and returns '`r as.numeric(pull(sample_df, vec_char))`' because non-numerical characters cannot be coerced into integers, thus applying the `mean()` function also returns 'NA' because a mean requires numerical data to be calculated. 
